@@ -1,0 +1,62 @@
+<template>
+  <div v-if="showData">
+    <h1>hello From there</h1>
+    <h2>{{vote.question_text}}</h2>
+    <!-- <div v-for="(v,i) in vote.choices" :key="i">
+      <h3>{{v.votes}}</h3>
+    </div> -->
+    
+  </div>
+    
+</template>
+
+<script>
+import axios from 'axios'
+export default {
+     data() {
+    return {
+       showData : false,
+      vote: null
+
+    };
+  },
+  mounted() {
+    this.showData = false;
+    this.getData();
+  },
+  methods: {
+    getData() {
+      axios
+        .get("http://127.0.0.1:8000/api/question/")
+        .then(response => {
+          this.vote = response.data;
+          this.showData = true;
+        });
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+</style>
+
+
+
+// async login() {
+    //   let valid = await this.$refs.form.validate();
+    //   if (!valid) {
+    //     return;
+    //   }
+    //   this.loading = true;
+    //   await this.simulateLogin();
+    //   this.loading = false;
+    //   if (
+    //     this.model.username === this.validCredentials.username &&
+    //     this.model.password === this.validCredentials.password
+    //   ) {
+    //     this.$message.success("Login successfull");
+    //   } else {
+    //     this.$message.error("Username or password is invalid");
+    //   }
+    // }
